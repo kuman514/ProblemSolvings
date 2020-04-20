@@ -11,6 +11,8 @@ int main(void)
     int n;
     std::cin >> n;
     
+    // uses std::stringstream (included in sstream)
+    // performs faster, but requires lots of memory spaces
     std::stringstream ss;
     for(int i = 1; i <= n; ++i)
     {
@@ -20,3 +22,4 @@ int main(void)
     std::cout << ss.str();
     return 0;
 }
+
