@@ -100,7 +100,7 @@ int main(void)
         else printf("INF\n");
     }
     
-    delete distance;
+    delete [] distance;
     
     return 0;
 }
