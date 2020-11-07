@@ -7,7 +7,6 @@
 
 // first: row, second: column
 std::vector< std::pair<int, int> > hole;
-std::vector< std::vector<int> > possible;
 
 int board[9][9];
 
@@ -161,7 +160,6 @@ int main(void)
             if(board[i][j] == 0)
             {
                 hole.push_back({i, j});
-                possible.push_back(std::vector<int>());
             }
         }
     }
