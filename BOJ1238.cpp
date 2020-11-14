@@ -60,20 +60,22 @@ int main(void)
     }
     
     int cost[N + 1] = {0,};
+    
+    // Calculate shortest distance for going back from X
+    int* dist_X = dijkstra_dist(GRAPH, X, N);
+    
     for(int i = 1; i <= N; i++)
     {
         // Calculate shortest distance for going to X
         int* dist_i = dijkstra_dist(GRAPH, i, N);
         
-        // Calculate shortest distance for going back from X
-        int* dist_X = dijkstra_dist(GRAPH, X, N);
-        
         // Cost for i = Dist i to X + Dist X to i
         cost[i] = dist_i[X] + dist_X[i];
         
         delete dist_i;
-        delete dist_X;
     }
+    
+    delete dist_X;
     
     // Result print
     int most = 0;
