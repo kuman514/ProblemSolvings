@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdio>
 
-// solving BOJ 10989
+// solving BOJ 10989 again
 
 int main(void)
 {
@@ -13,9 +13,7 @@ int main(void)
     
     // each number is no more than 10000
     short input;
-    
-    // using short counter due to memory constraints
-    short result[10001] = {0,};
+    int result[10001] = {0,};
     
     for(int i = 0; i < N; i++)
     {
