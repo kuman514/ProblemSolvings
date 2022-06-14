@@ -3,6 +3,9 @@
 
 // Solving BOJ 2098
 
+const int INF = 16000001;
+const int NOT_VISITED = -1;
+
 int travelingSalesperson(
     int n,
     int currentCity,
@@ -12,21 +15,21 @@ int travelingSalesperson(
     std::vector<int>& bitMaskValues,
     int fullyVisited
 ) {
+    // Already visited?
+    if (minCost[currentCity][visited] != NOT_VISITED) {
+        return minCost[currentCity][visited];
+    }
+    
     // If fully visited
     if (visited == fullyVisited) {
         if (weight[currentCity][0] > 0) {
             return weight[currentCity][0];
         } else {
-            return 16000001;
+            return INF;
         }
     }
     
-    // Already visited?
-    if (minCost[currentCity][visited] < 16000001) {
-        return minCost[currentCity][visited];
-    }
-    
-    int tmpCost = 16000001;
+    int tmpCost = INF;
     for (int i = 0; i < n; i++) {
         // Already visited?
         if (visited & bitMaskValues[i]) {
@@ -38,8 +41,7 @@ int travelingSalesperson(
             continue;
         }
         
-        // Get the cost on the current city and one from further traversals
-        int curCost = weight[currentCity][i] + travelingSalesperson(
+        int curCost = travelingSalesperson(
             n,
             i,
             visited | bitMaskValues[i],
@@ -49,8 +51,15 @@ int travelingSalesperson(
             fullyVisited
         );
         
-        if (tmpCost > curCost) {
-            tmpCost = curCost;
+        int totalCost;
+        if (curCost >= INF) {
+            totalCost = INF;
+        } else {
+            totalCost = weight[currentCity][i] + curCost;
+        }
+        
+        if (tmpCost > totalCost) {
+            tmpCost = totalCost;
         }
     }
     
@@ -85,7 +94,7 @@ int main(void) {
     }
     
     // Initialize minimum costs
-    std::vector< std::vector<int> > minCost(n, std::vector<int>(fullyVisited + 1, 16000001));
+    std::vector< std::vector<int> > minCost(n, std::vector<int>(fullyVisited + 1, NOT_VISITED));
     
     std::cout << travelingSalesperson(
         n,
