@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 
-// Solving BOJ 2933
+// Solving BOJ 2933 again
 
 int main(void) {
     std::ios_base::sync_with_stdio(false);
@@ -74,8 +74,6 @@ int main(void) {
                 }
                 
                 // Search mineral area by using BFS
-                std::vector<int> closestToGround(m, -1);
-                
                 // first: row, second: col
                 std::queue< std::pair<int, int> > next;
                 std::vector< std::pair<int, int> > savedMinerals;
@@ -95,11 +93,6 @@ int main(void) {
                     
                     // Paint here visited
                     visited[curR][curC] = true;
-                    
-                    // Closer than the closest
-                    if (closestToGround[curC] < curR) {
-                        closestToGround[curC] = curR;
-                    }
                     
                     // Take and save this mineral
                     mineral[curR][curC] = false;
@@ -131,20 +124,23 @@ int main(void) {
                 }
                 
                 // Calculate falling height
-                int fallingHeight = n;
-                for (int k = 0; k < m; k++) {
-                    if (closestToGround[k] < 0) {
-                        continue;
-                    }
+                int fallingHeight = n - 1;
+                for (int k = 0; k < savedMinerals.size(); k++) {
+                    const int curR = savedMinerals[k].first;
+                    const int curC = savedMinerals[k].second;
                     
-                    for (int l = closestToGround[k] + 1; l <= n; l++) {
-                        if (l == n || mineral[l][k]) {
-                            if (fallingHeight > l - closestToGround[k] - 1) {
-                                fallingHeight = l - closestToGround[k] - 1;
-                            }
-                            
+                    int tmpHeight = 0;
+                    while (tmpHeight < n - curR) {
+                        if (mineral[curR + tmpHeight][curC]) {
                             break;
                         }
+                        
+                        tmpHeight++;
+                    }
+                    
+                    tmpHeight--;
+                    if (fallingHeight > tmpHeight) {
+                        fallingHeight = tmpHeight;
                     }
                 }
                 
