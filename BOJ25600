@@ -1,0 +1,13 @@
+# Solving BOJ 25600
+
+n = int(input())
+highest = 0
+i = 0
+while i < n:
+    a, d, g = list(map(int, input().split()))
+    score = a * (d + g)
+    if a == (d + g):
+        score *= 2
+    highest = max(highest, score)
+    i += 1
+print(highest)
